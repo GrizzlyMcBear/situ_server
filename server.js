@@ -1,11 +1,26 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const cors = require('cors');
 const path = require('path');
 const app = express();
+require('./database');
 
 app.use(express.static(path.join(__dirname, 'public')))
+	.use(bodyParser.json())
+	.use(cors())
 	.set('views', path.join(__dirname, 'views'))
 	.set('view engine', 'ejs')
 	.get('/', (req, res) => res.render('pages/index'));
+
+// API Definition
+const users = require('/api/users');
+app.use('/api/users', users);
+
+// API Implementation
+app.use(express.static(path.join(__dirname, '../build')))
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, '../build'))
+})
 
 // Port and Listen
 const PORT = process.env.PORT || 5000

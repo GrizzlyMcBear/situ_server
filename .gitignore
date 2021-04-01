@@ -118,3 +118,7 @@ npm-debug.log
 # Docker
 Dockerfile
 docker-compose.yml
+
+# Visual Studio 2019 Community
+##############################
+.vs/
