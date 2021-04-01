@@ -7,6 +7,7 @@ router.get('/', (req, res) => {
 	User.find()
 		.then(users => res.json(users))
 		.catch(err => console.log(err))
+	console.log("Inside `router.get` for /api/users");
 });
 
 router.post('/', (req, res) => {
