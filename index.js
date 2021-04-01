@@ -10,10 +10,10 @@ express()
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 
-console.log("Defining MongoDB");
+console.log('Defining MongoDB');
 
 const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://m001-student:m001-mongodb-basics@sandbox.lqxqp.mongodb.net/admin?retryWrites=true&w=majority";
+const uri = process.env.MONGO_DB_URI || 'mongodb+srv://m001-student:m001-mongodb-basics@sandbox.lqxqp.mongodb.net/admin?retryWrites=true&w=majority';
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
   const collection = client.db("sample_training").collection("zips");
