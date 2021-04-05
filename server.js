@@ -16,6 +16,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 const users = require('./api/users');
 app.use('/api/users', users);
 
+const changelogs = require('./api/changelogs');
+app.use('/api/changelogs', changelogs);
+
 // API Implementation
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {
@@ -28,13 +31,6 @@ app.listen(PORT, () => console.log(`Listening on ${PORT}`));
 
 // MongoDB official documentation
 const MongoClient = require('mongodb').MongoClient;
-
-async function listDatabases(client){
-    databasesList = await client.db().admin().listDatabases();
- 
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-};
 
 async function main() {
 	/**
@@ -49,15 +45,47 @@ async function main() {
 		// Connect to the MongoDB cluster
 		await client.connect();
 
-		// Make the appropriate DB calls
-    	await listDatabases(client);
-		
-		// await client.connect(err => {
-		// 	const collection = client.db("sample_training").collection("zips");
-		// 	// perform actions on the collection object
-		// 	console.log(collection.findOne());
-		// 	client.close();
-		// });
+		await createListing(client,
+			{
+				details: {
+					"ty": "mlti",
+					"mts": [
+						{
+							"ty": "is",
+							"ibi": 1,
+							"s": "Ofra and Ido save the world one zoom at a time"
+						},
+						{
+							"ty": "as",
+							"st": "text",
+							"si": 1,
+							"ei": 46,
+							"sm": {
+								"ts_ff_i": true,
+								"ts_un_i": true,
+								"ts_fgc_i": true,
+								"ts_bd_i": true,
+								"ts_va_i": true,
+								"ts_it_i": true,
+								"ts_sc_i": true,
+								"ts_st_i": true,
+								"ts_tw": 400,
+								"ts_fs_i": true,
+								"ts_bgc_i": true
+							}
+						}
+					]
+				},
+				timestamp: 1586678693259,
+				user: "14398752413901559411",
+				index: 3,
+				revision: "44c82f3f4a83c303",
+				field6: 1,
+				field7: null,
+				field8: null
+			}
+		);
+
 	} catch (e) {
 		console.error(e);
 	} finally {
@@ -66,3 +94,8 @@ async function main() {
 }
 
 main().catch(console.error);
+
+async function createListing(client, newListing){
+    const result = await client.db("situ_data").collection("changelogs").insertOne(newListing);
+    console.log(`New listing created with the following id: ${result.insertedId}`);
+}
