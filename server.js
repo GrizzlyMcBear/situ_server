@@ -19,6 +19,9 @@ app.use('/api/users', users);
 const changelogs = require('./api/changelogs');
 app.use('/api/changelogs', changelogs);
 
+const insights = require('./api/minisite/insights');
+app.use('/api/minisite/insights', insights);
+
 // API Implementation
 app.use(express.static(path.join(__dirname, '../build')))
 app.get('*', (req, res) => {
