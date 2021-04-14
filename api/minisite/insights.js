@@ -8,7 +8,7 @@ router.get('/', (req, res) => {
     const uri = process.env.MONGO_DB_URI || 'mongodb+srv://m001-student:m001-mongodb-basics@sandbox.lqxqp.mongodb.net/situ_data?retryWrites=true&w=majority';
 	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-    let docId = req.body.docId;
+    let docId = req.query.docId;
 
     console.log('docId = ' + docId);
     // '1kbPYcn8CTzfxD4JUfG6OZhuAirLZYgKhT1NV6GHXwd8'
