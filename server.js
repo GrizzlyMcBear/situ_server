@@ -51,46 +51,46 @@ async function main() {
 		// Connect to the MongoDB cluster
 		await client.connect();
 
-		await createListing(client,
-			{
-				details: {
-					"ty": "mlti",
-					"mts": [
-						{
-							"ty": "is",
-							"ibi": 1,
-							"s": "Ofra and Ido save the world one zoom at a time"
-						},
-						{
-							"ty": "as",
-							"st": "text",
-							"si": 1,
-							"ei": 46,
-							"sm": {
-								"ts_ff_i": true,
-								"ts_un_i": true,
-								"ts_fgc_i": true,
-								"ts_bd_i": true,
-								"ts_va_i": true,
-								"ts_it_i": true,
-								"ts_sc_i": true,
-								"ts_st_i": true,
-								"ts_tw": 400,
-								"ts_fs_i": true,
-								"ts_bgc_i": true
-							}
-						}
-					]
-				},
-				timestamp: 1586678693259,
-				user: "14398752413901559411",
-				index: 3,
-				revision: "44c82f3f4a83c303",
-				field6: 1,
-				field7: null,
-				field8: null
-			}
-		);
+		// await createListing(client,
+		// 	{
+		// 		details: {
+		// 			"ty": "mlti",
+		// 			"mts": [
+		// 				{
+		// 					"ty": "is",
+		// 					"ibi": 1,
+		// 					"s": "Ofra and Ido save the world one zoom at a time"
+		// 				},
+		// 				{
+		// 					"ty": "as",
+		// 					"st": "text",
+		// 					"si": 1,
+		// 					"ei": 46,
+		// 					"sm": {
+		// 						"ts_ff_i": true,
+		// 						"ts_un_i": true,
+		// 						"ts_fgc_i": true,
+		// 						"ts_bd_i": true,
+		// 						"ts_va_i": true,
+		// 						"ts_it_i": true,
+		// 						"ts_sc_i": true,
+		// 						"ts_st_i": true,
+		// 						"ts_tw": 400,
+		// 						"ts_fs_i": true,
+		// 						"ts_bgc_i": true
+		// 					}
+		// 				}
+		// 			]
+		// 		},
+		// 		timestamp: 1586678693259,
+		// 		user: "14398752413901559411",
+		// 		index: 3,
+		// 		revision: "44c82f3f4a83c303",
+		// 		field6: 1,
+		// 		field7: null,
+		// 		field8: null
+		// 	}
+		// );
 
 	} catch (e) {
 		console.error(e);

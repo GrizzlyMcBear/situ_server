@@ -4,11 +4,10 @@ const MongoClient = require('mongodb').MongoClient;
 const Revision = require('../../../models/cluster/database/revision');
 
 const DBName = 'situ_data';
+const uri = process.env.MONGO_DB_URI || `mongodb+srv://m001-student:m001-mongodb-basics@sandbox.lqxqp.mongodb.net/${DBName}?retryWrites=true&w=majority`;
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 router.get('/', (req, res) => {
-
-    const uri = process.env.MONGO_DB_URI || `mongodb+srv://m001-student:m001-mongodb-basics@sandbox.lqxqp.mongodb.net/${DBName}?retryWrites=true&w=majority`;
-	const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     // Connect to the MongoDB cluster
     client.connect()
@@ -41,15 +40,35 @@ router.post('/', (req, res) => {
 	const newRevision = new Revision({
 		exportLinks: exportLinks, id: id, kind: kind, lastModifyingUser: lastModifyingUser, etag: etag, lastModifyingUserName: lastModifyingUserName,
         selfLink: selfLink, mimeType: mimeType, published: published, modifiedDate: modifiedDate
-	})
-	newRevision.save()
-		.then(() => res.json({
-			message: "Created revision successfully"
-		}))
-		.catch(err => res.status(400).json({
-			"error": err,
-			"message": "Error creating revision"
-		}))
+	});
+
+    try	{
+		await client.connect();
+        await updateRevision(client, newRevision);
+    } catch (e) {
+		console.error(e);
+	} finally {
+		await client.close();
+	}
+
+	// newRevision.save()
+	// 	.then(() => res.json({
+	// 		message: "Created revision successfully"
+	// 	}))
+	// 	.catch(err => res.status(400).json({
+	// 		"error": err,
+	// 		"message": "Error creating revision"
+	// 	}))
+
 });
+
+async function updateRevision(client, revision) {
+    console.log('Updating revision:');
+    console.log(revision);
+    console.log('\n');
+    
+    const result = await client.db("situ_data").collection("revisions").insertOne(revision);
+    console.log(`Updated revision successfully with the following id: ${result.insertedId}`);
+}
 
 module.exports = router;
