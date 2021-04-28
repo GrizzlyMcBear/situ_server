@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const MongoClient = require('mongodb').MongoClient;
-const Revision = require('../models/cluster/database/revision');
+const Revision = require('../../../models/cluster/database/revision');
 
 const DBName = 'situ_data';
 
