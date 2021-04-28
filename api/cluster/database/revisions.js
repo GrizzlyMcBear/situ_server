@@ -30,7 +30,7 @@ router.get('/', (req, res) => {
 });
 
 async function getCollections(client){
-    collections = await client.db().situ_data().collections();
+    collections = await client.db('situ_data').collections();
     
     console.log(`Collections (DB ${DBName}):`);
     collections.forEach(db => console.log(` - ${db.name}`));
