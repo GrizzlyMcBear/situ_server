@@ -42,6 +42,9 @@ router.post('/', (req, res) => {
         selfLink: selfLink, mimeType: mimeType, published: published, modifiedDate: modifiedDate
 	});
 
+    console.log("[revisions:POST] request body:");
+    console.log(req);
+    
     client.connect()
         .then(function () {
             updateRevision(client, newRevision)
@@ -50,9 +53,9 @@ router.post('/', (req, res) => {
             })
             .catch(err => console.error(err))
             .finally(function () {
-                console.log("[revisions:SET] Closing client...");
+                console.log("[revisions:POST] Closing client...");
                 client.close().then(function () {}).catch(function () {});
-                console.log("[revisions:SET] Closed client!");
+                console.log("[revisions:POST] Closed client!");
             });
         })
         .catch(error => console.error(error));
