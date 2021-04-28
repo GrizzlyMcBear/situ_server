@@ -42,14 +42,20 @@ router.post('/', (req, res) => {
         selfLink: selfLink, mimeType: mimeType, published: published, modifiedDate: modifiedDate
 	});
 
-    try	{
-		await client.connect();
-        await updateRevision(client, newRevision);
-    } catch (e) {
-		console.error(e);
-	} finally {
-		await client.close();
-	}
+    client.connect()
+        .then(function () {
+            updateRevision(client, newRevision)
+            .then(function (result) {
+                res.json(result);
+            })
+            .catch(err => console.error(err))
+            .finally(function () {
+                console.log("Closing client...");
+                client.close().then(function () {}).catch(function () {});
+                console.log("Closed client!");
+            });
+        })
+        .catch(error => console.error(error));
 
 	// newRevision.save()
 	// 	.then(() => res.json({
@@ -66,9 +72,11 @@ async function updateRevision(client, revision) {
     console.log('Updating revision:');
     console.log(revision);
     console.log('\n');
-    
+
     const result = await client.db("situ_data").collection("revisions").insertOne(revision);
     console.log(`Updated revision successfully with the following id: ${result.insertedId}`);
+
+    return result;
 }
 
 module.exports = router;
