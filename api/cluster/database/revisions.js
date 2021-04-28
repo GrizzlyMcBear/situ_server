@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
         .then(function () {
             getCollections(client)
             .then(function (collections) {
-                res.json(collections);
+                res(collections);
             })
             .catch(err => console.error(err))
             .finally(function () {
