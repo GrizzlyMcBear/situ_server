@@ -13,8 +13,6 @@ router.get('/', (req, res) => {
     // Connect to the MongoDB cluster
     client.connect()
         .then(function () {
-            // Make the appropriate DB calls
-            // await listDatabases(client);
             getCollections(client)
             .then(function (collections) {
                 res.json(collections);
@@ -33,7 +31,7 @@ async function getCollections(client){
     collections = await client.db('situ_data').collections();
     
     console.log(`Collections (DB ${DBName}):`);
-    collections.forEach(db => console.log(` - ${db.name}`));
+    collections.forEach(collection => console.log(` - ${collection.collectionName}`));
 
     return collections;
 };
