@@ -19,6 +19,9 @@ app.use('/api/users', users);
 const changelogs = require('./api/changelogs');
 app.use('/api/changelogs', changelogs);
 
+const revisions = require('./api/cluster/database/revisions');
+app.use('/api/cluster/database/revisions', revisions);
+
 const insights = require('./api/minisite/insights');
 app.use('/api/minisite/insights', insights);
 
