@@ -14,14 +14,13 @@ router.get('/', (req, res) => {
         .then(function () {
             getCollections(client)
             .then(function (collections) {
-                console.log(collections);
                 return collections;
             })
             .catch(err => console.error(err))
             .finally(function () {
-                console.log("Closing client...");
+                console.log("[revisions:GET] Closing client...");
                 client.close().then(function () {}).catch(function () {});
-                console.log("Closed client!");
+                console.log("[revisions:GET] Closed client!");
             });
         })
         .catch(error => console.error(error));
@@ -30,8 +29,8 @@ router.get('/', (req, res) => {
 async function getCollections(client){
     collections = await client.db('situ_data').collections();
     
-    console.log(`Collections (DB ${DBName}):`);
-    collections.forEach(collection => console.log(` - ${collection.collectionName}`));
+    // console.log(`Collections (DB ${DBName}):`);
+    // collections.forEach(collection => console.log(` - ${collection.collectionName}`));
 
     return collections;
 };
@@ -47,13 +46,13 @@ router.post('/', (req, res) => {
         .then(function () {
             updateRevision(client, newRevision)
             .then(function (result) {
-                res.json(result);
+                return result;
             })
             .catch(err => console.error(err))
             .finally(function () {
-                console.log("Closing client...");
+                console.log("[revisions:SET] Closing client...");
                 client.close().then(function () {}).catch(function () {});
-                console.log("Closed client!");
+                console.log("[revisions:SET] Closed client!");
             });
         })
         .catch(error => console.error(error));
