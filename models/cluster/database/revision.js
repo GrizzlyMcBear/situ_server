@@ -44,4 +44,4 @@ const revisionSchema = new Schema({
     }
 });
 
-module.exports = mongoose.model("Revision", revisionSchema, "revisions");
+module.exports = mongoose.model("revision", revisionSchema, "revisions");
