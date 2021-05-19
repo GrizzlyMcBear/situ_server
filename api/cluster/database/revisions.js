@@ -37,8 +37,8 @@ async function getCollections(client){
 
 router.post('/', (req, res) => {
 
-    console.log("[revisions:POST] req");
-    console.dir(req);
+    console.log("[revisions:POST] req.body");
+    console.dir(req.body);
 
     const { exportLinks, id, kind, lastModifyingUser, etag, lastModifyingUserName, selfLink, mimeType, published, modifiedDate } = req.body;
 	const newRevision = new Revision({
