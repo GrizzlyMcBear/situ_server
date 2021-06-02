@@ -70,7 +70,7 @@ async function updateRevision(client, revision) {
     console.log(revision);
     console.log('\n');
 
-    const result = await client.db("situ_data").collection("revisions").insertOne(encodedData);
+    const result = await client.db("situ_data").collection("revisions").insertOne(revision);
     console.log(`Updated revision successfully with the following id: ${result.insertedId}`);
 
     return result;
