@@ -54,12 +54,15 @@ router.post('/', (req, res) => {
             })
             .catch(err => console.error(err))
             .finally(function () {
-                console.log("[revisions:POST] Closing client...");
-                client.close().then(function () {}).catch(function () {});
-                console.log("[revisions:POST] Closed client!");
+                // console.log("[revisions:POST] Closing client...");
+                // client.close().then(function () {}).catch(function () {});
+                // console.log("[revisions:POST] Closed client!");
             });
         })
-        .catch(error => console.error(error));
+        .catch(error => console.error(error))
+        .finally(function () {
+            client.close();
+        })
 
 	// newRevision.save()
 	// 	.then(() => res.json({
