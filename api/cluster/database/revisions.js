@@ -5,9 +5,10 @@ const Revision = require('../../../models/cluster/database/revision');
 
 const DBName = 'situ_data';
 const uri = process.env.MONGO_DB_URI || `mongodb+srv://m001-student:m001-mongodb-basics@sandbox.lqxqp.mongodb.net/${DBName}?retryWrites=true&w=majority`;
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
 router.get('/', (req, res) => {
+
+    let client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
     // Connect to the MongoDB cluster
     client.connect()
@@ -37,6 +38,8 @@ async function getCollections(client){
 
 router.post('/', (req, res) => {
 
+    let client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
     console.log("[revisions:POST] req.body");
     console.dir(req.body);
 
@@ -60,16 +63,6 @@ router.post('/', (req, res) => {
             });
         })
         .catch(error => console.error(error));
-
-	// newRevision.save()
-	// 	.then(() => res.json({
-	// 		message: "Created revision successfully"
-	// 	}))
-	// 	.catch(err => res.status(400).json({
-	// 		"error": err,
-	// 		"message": "Error creating revision"
-	// 	}))
-
 });
 
 async function updateRevision(client, revision) {
