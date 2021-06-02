@@ -73,11 +73,17 @@ router.post('/', (req, res) => {
 });
 
 async function updateRevision(client, revision) {
-    console.log('Updating revision:');
+    let encodedData = encodeURIComponent(revision);
+    
+    console.log('Updated revision:');
     console.log(revision);
     console.log('\n');
 
-    const result = await client.db("situ_data").collection("revisions").insertOne(revision);
+    console.log('Updated (encoded) revision:');
+    console.log(encodedData);
+    console.log('\n');
+
+    const result = await client.db("situ_data").collection("revisions").insertOne(encodedData);
     console.log(`Updated revision successfully with the following id: ${result.insertedId}`);
 
     return result;
